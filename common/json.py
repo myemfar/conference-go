@@ -2,6 +2,7 @@ from json import JSONEncoder
 from datetime import datetime
 from django.db.models import QuerySet
 
+
 class DateEncoder(JSONEncoder):
     def default(self, o):
         if isinstance(o, datetime):
@@ -20,6 +21,7 @@ class QuerySetEncoder(JSONEncoder):
 
 class ModelEncoder(QuerySetEncoder, DateEncoder, JSONEncoder):
     encoders = {}
+
     def default(self, o):
         #   if the object to decode is the same class as what's in the
         #   model property, then
@@ -47,5 +49,6 @@ class ModelEncoder(QuerySetEncoder, DateEncoder, JSONEncoder):
         #       return super().default(o)  # From the documentation
         else:
             return super().default(o)
+
     def get_extra_data(self, o):
         return {}
