@@ -81,6 +81,7 @@ class LocationListEncoder(ModelEncoder):
     model = Location
     properties = ["name"]
 
+
 def api_list_locations(request):
     """
     Lists the location names and the link to the location.
@@ -131,11 +132,6 @@ def api_show_location(request, id):
     )
 
 
-class LocationListEncoder(ModelEncoder):
-    model = Location
-    properties = ["name"]
-
-
 class ConferenceDetailEncoder(ModelEncoder):
     model = Conference
     properties = [
@@ -153,6 +149,7 @@ class ConferenceDetailEncoder(ModelEncoder):
         "location": LocationListEncoder(),
     }
 
+
 class LocationDetailEncoder(ModelEncoder):
     model = Location
     properties = [
@@ -164,4 +161,4 @@ class LocationDetailEncoder(ModelEncoder):
     ]
 
     def get_extra_data(self, o):
-        return { "state": o.state.abbreviation }
+        return {"state": o.state.abbreviation}

@@ -3,9 +3,11 @@ from common.json import ModelEncoder
 from .models import Attendee
 from events.models import Conference
 
+
 class AttendeeListEncoder(ModelEncoder):
     model = Attendee
     properties = ["name"]
+
 
 def api_list_attendees(request, conference_id):
     """
@@ -39,6 +41,7 @@ class ConferenceEncoder(ModelEncoder):
         "name",
     ]
 
+
 class AttendeeEncoder(ModelEncoder):
     model = Attendee
     properties = [
@@ -51,6 +54,7 @@ class AttendeeEncoder(ModelEncoder):
     encoders = {
         "conference": ConferenceEncoder(),
     }
+
 
 def api_show_attendee(request, id):
     """
@@ -75,5 +79,5 @@ def api_show_attendee(request, id):
     attendee = Attendee.objects.get(id=id)
     return JsonResponse(
         {"attendee": attendee},
-        encoder = AttendeeEncoder,
+        encoder=AttendeeEncoder,
     )
