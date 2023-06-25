@@ -3,7 +3,7 @@ from common.json import ModelEncoder
 from .models import Conference, Location, State
 from django.views.decorators.http import require_http_methods
 import json
-from .acls import get_photo
+from .acls import get_photo, get_weather_data
 
 class ConferenceListEncoder(ModelEncoder):
     model = Conference
@@ -43,8 +43,15 @@ def api_list_conferences(request):
 def api_show_conference(request, id):
     if request.method == "GET":
         conference = Conference.objects.get(id=id)
+
+        # get the weather data
+        weather = get_weather_data(conference.location)
+        response = {
+            "weather": weather,
+            "conference": conference,
+        }
         return JsonResponse(
-            conference,
+            response,
             encoder=ConferenceDetailEncoder,
             safe=False,
         )
