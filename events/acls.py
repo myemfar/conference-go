@@ -1,6 +1,6 @@
 from .keys import PEXELS_API_KEY, OPEN_WEATHER_API_KEY
-import json
 import requests
+
 
 def get_photo(city, state):
     # pexels api request
@@ -27,7 +27,7 @@ def get_weather_data(location):
     response = requests.get(url, params)
     lat = response.json()[0]['lat']
     lon = response.json()[0]['lon']
-    if lat == None or lon == None:
+    if lat is None or lon is None:
         return None
 
     params = {
