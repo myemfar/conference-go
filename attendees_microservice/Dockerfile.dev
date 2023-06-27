@@ -1,0 +1,27 @@
+# Select the base image that is best for our application
+FROM python:3
+
+RUN apt-get update
+RUN apt-get install cron -y
+
+# Install any operating system junk
+ENV PYTHONUNBUFFERED 1
+
+# Set the working directory to copy stuff to
+WORKDIR /app
+
+# Copy all the code from the local directory into the image
+
+COPY requirements.txt requirements.txt
+
+
+# Install any language dependencies
+RUN pip install -r requirements.txt
+
+RUN touch /var/spool/cron/crontabs/root
+RUN crontab -l
+
+
+# Set the command to run the application
+CMD python manage.py crontab add && service cron start && python manage.py runserver "0.0.0.0:8001"
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8001"]
